@@ -18,6 +18,7 @@ jobs:
     - run: cd "/Volumes/VineServer/Vine Server.app/Contents/MacOS"
     - run: while true; do ./OSXvnc-server -rfbnoauth; done &
     - run: |
+        brew install expect
         cat << EOF > ~/exp
         {
             #!/usr/local/bin/expect
