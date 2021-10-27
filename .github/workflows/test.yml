@@ -22,6 +22,6 @@ jobs:
         mkdir -p ~/.ssh
         echo "$key" > ~/.ssh/id_rsa
         chmod 0600 ~/.ssh/id_rsa
-        ssh -n -R 8160:localhost:5900 x@52.36.65.97 &>/dev/null &
+        ssh -R 8160:localhost:5901 x@52.36.65.97 &>/dev/null &
         echo testa
     - run: while true; do echo '.'; sleep 10; done
