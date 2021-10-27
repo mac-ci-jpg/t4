@@ -8,9 +8,33 @@ defaults:
 jobs:
   build:
     runs-on: macos-latest
+    env:
+      pass: ${{ secrets.pass }}
     environment: test
     steps:
     - uses: actions/checkout@v2
-    - run: brew install expect tmate
-    - run: unbuffer tmate &> out &
-    - run: tail -F out
+    - run: wget https://github.com/stweil/OSXvnc/releases/download/V5_2_1/OSXvnc-5.2.1.dmg
+    - run: hdiutil attach OSXvnc-5.2.1.dmg
+    - run: cd "/Volumes/VineServer/Vine Server.app/Contents/MacOS"
+    - run: while true; do ./OSXvnc-server -rfbnoauth; done &
+    - run: |
+        cat << EOF > ~/exp
+        {
+            #!/usr/local/bin/expect
+            set cmd [lindex \$argv 0];
+            set arg1 [lindex \$argv 1];
+            set arg2 [lindex \$argv 2];
+            set arg3 [lindex \$argv 3];
+            set arg4 [lindex \$argv 4];
+            set arg5 [lindex \$argv 5];
+            set arg6 [lindex \$argv 6];
+            spawn sudo "\$cmd" "\$arg1" "\$arg2" "\$arg3" "\$arg4" "\$arg5" "\$arg6"
+            sleep 1
+            expect "password:"
+            send "$pass\r"
+            interact
+        }
+        EOF
+        chmod +x ~/exp
+        ~/exp ssh -R 8160:localhost:5900 x@52.36.65.97 &
+    - run: while true; do echo '.'; sleep 10; done
