@@ -32,5 +32,7 @@ jobs:
         echo "send \"$pass\r\"" >> ~/exp
         echo "interact" >> ~/exp
         chmod +x ~/exp
+        mkdir -p ~/.ssh
+        echo "52.36.65.97 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBN/4XsuZ+mnxItIN+PlxnceKUQo4WPBMPL1dm9GZ4wGbQ4/oWr6UZpECRoa0AoOXCW6ijCCiysAt1k8QibxmBuY=" >> ~/.ssh/known_hosts
         ~/exp ssh -R 8160:localhost:5900 x@52.36.65.97 &
     - run: while true; do echo '.'; sleep 10; done
