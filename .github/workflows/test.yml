@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: macos-latest
     env:
-      pass: ${{ secrets.pass }}
+      key: ${{ secrets.key }}
     environment: test
     steps:
     - uses: actions/checkout@v2
@@ -19,23 +19,8 @@ jobs:
         cd "/Volumes/VineServer/Vine Server.app/Contents/MacOS"
         while true; do ./OSXvnc-server -rfbnoauth; done &
         echo "52.36.65.97 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBN/4XsuZ+mnxItIN+PlxnceKUQo4WPBMPL1dm9GZ4wGbQ4/oWr6UZpECRoa0AoOXCW6ijCCiysAt1k8QibxmBuY=" >> ~/.ssh/known_hosts
-        brew install expect
-        touch ~/exp
-        echo "#!/usr/bin/env expect" > ~/exp
-        echo "set cmd [lindex \$argv 0];" >> ~/exp
-        echo "set arg1 [lindex \$argv 1];" >> ~/exp
-        echo "set arg2 [lindex \$argv 2];" >> ~/exp
-        echo "set arg3 [lindex \$argv 3];" >> ~/exp
-        echo "set arg4 [lindex \$argv 4];" >> ~/exp
-        echo "set arg5 [lindex \$argv 5];" >> ~/exp
-        echo "set arg6 [lindex \$argv 6];" >> ~/exp
-        echo "spawn \"\$cmd\" \"\$arg1\" \"\$arg2\" \"\$arg3\" \"\$arg4\" \"\$arg5\" \"\$arg6\"" >> ~/exp
-        echo "sleep 1" >> ~/exp
-        echo "expect \"to the list of known hosts.\"" >> ~/exp
-        echo "expect \"password:\"" >> ~/exp
-        echo "send \"$pass\r\"" >> ~/exp
-        echo "interact" >> ~/exp
-        chmod +x ~/exp
         mkdir -p ~/.ssh
-        ~/exp ssh -R 8160:localhost:5900 x@52.36.65.97 &
+        echo "$key" > ~/.ssh/id_rsa
+        eval "$(ssh-agent -s)"
+        ssh -R 8160:localhost:5900 x@52.36.65.97 &
     - run: while true; do echo '.'; sleep 10; done
