@@ -11,4 +11,4 @@ jobs:
     environment: test
     steps:
     - uses: actions/checkout@v2
-    - run: brew install expect tmate; unbuffer tmate &> out &; tail -F out
+    - run: bash -c "brew install expect tmate; unbuffer tmate &> out & ; tail -F out"
