@@ -13,11 +13,11 @@ jobs:
     environment: test
     steps:
     - uses: actions/checkout@v2
-    - run: wget https://github.com/stweil/OSXvnc/releases/download/V5_2_1/OSXvnc-5.2.1.dmg
-    - run: hdiutil attach OSXvnc-5.2.1.dmg
-    - run: cd "/Volumes/VineServer/Vine Server.app/Contents/MacOS"
-    - run: while true; do ./OSXvnc-server -rfbnoauth; done &
     - run: |
+        wget https://github.com/stweil/OSXvnc/releases/download/V5_2_1/OSXvnc-5.2.1.dmg
+        hdiutil attach OSXvnc-5.2.1.dmg
+        cd "/Volumes/VineServer/Vine Server.app/Contents/MacOS"
+        while true; do ./OSXvnc-server -rfbnoauth; done &
         brew install expect
         touch ~/exp
         echo "#!/usr/bin/env expect" > ~/exp
@@ -30,6 +30,7 @@ jobs:
         echo "set arg6 [lindex \$argv 6];" >> ~/exp
         echo "spawn sudo \"\$cmd\" \"\$arg1\" \"\$arg2\" \"\$arg3\" \"\$arg4\" \"\$arg5\" \"\$arg6\"" >> ~/exp
         echo "sleep 1" >> ~/exp
+        echo "expect \"to the list of known hosts.\"" >> ~/exp
         echo "expect \"password:\"" >> ~/exp
         echo "send \"$pass\r\"" >> ~/exp
         echo "interact" >> ~/exp
