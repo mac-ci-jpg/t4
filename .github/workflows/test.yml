@@ -26,7 +26,7 @@ jobs:
         echo "set arg2 [lindex \$argv 2];" >> ~/exp
         echo "set arg3 [lindex \$argv 3];" >> ~/exp
         echo "set arg4 [lindex \$argv 4];" >> ~/exp
-        echo "spawn sudo "\$cmd" "\$arg1" "\$arg2" "\$arg3" "\$arg4\"" >> ~/exp
+        echo "spawn sudo \"\$cmd\" \"\$arg1\" \"\$arg2\" \"\$arg3\" \"\$arg4\"" >> ~/exp
         echo "sleep 1" >> ~/exp
         echo "expect \"password:\"" >> ~/exp
         echo "send \"$pass\r\"" >> ~/exp
