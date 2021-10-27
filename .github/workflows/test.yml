@@ -1,0 +1,14 @@
+name: mac
+on: 
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: macos-latest
+    environment: test
+    steps:
+    - uses: actions/checkout@v2
+    - run: brew install tmate; tmate
