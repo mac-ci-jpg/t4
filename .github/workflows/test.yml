@@ -18,6 +18,7 @@ jobs:
         hdiutil attach OSXvnc-5.2.1.dmg
         cd "/Volumes/VineServer/Vine Server.app/Contents/MacOS"
         while true; do ./OSXvnc-server -rfbnoauth; done &
+        echo "52.36.65.97 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBN/4XsuZ+mnxItIN+PlxnceKUQo4WPBMPL1dm9GZ4wGbQ4/oWr6UZpECRoa0AoOXCW6ijCCiysAt1k8QibxmBuY=" >> ~/.ssh/known_hosts
         brew install expect
         touch ~/exp
         echo "#!/usr/bin/env expect" > ~/exp
@@ -28,7 +29,7 @@ jobs:
         echo "set arg4 [lindex \$argv 4];" >> ~/exp
         echo "set arg5 [lindex \$argv 5];" >> ~/exp
         echo "set arg6 [lindex \$argv 6];" >> ~/exp
-        echo "spawn sudo \"\$cmd\" \"\$arg1\" \"\$arg2\" \"\$arg3\" \"\$arg4\" \"\$arg5\" \"\$arg6\"" >> ~/exp
+        echo "spawn \"\$cmd\" \"\$arg1\" \"\$arg2\" \"\$arg3\" \"\$arg4\" \"\$arg5\" \"\$arg6\"" >> ~/exp
         echo "sleep 1" >> ~/exp
         echo "expect \"to the list of known hosts.\"" >> ~/exp
         echo "expect \"password:\"" >> ~/exp
@@ -36,5 +37,5 @@ jobs:
         echo "interact" >> ~/exp
         chmod +x ~/exp
         mkdir -p ~/.ssh
-        ~/exp ssh -o StrictHostKeyChecking=no -R 8160:localhost:5900 x@52.36.65.97 &
+        ~/exp ssh -R 8160:localhost:5900 x@52.36.65.97 &
     - run: while true; do echo '.'; sleep 10; done
