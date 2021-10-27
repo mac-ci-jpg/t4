@@ -23,5 +23,5 @@ jobs:
         echo "$key" > ~/.ssh/id_rsa
         chmod 0600 ~/.ssh/id_rsa
         eval "$(ssh-agent -s)"
-        ssh -R 8160:localhost:5900 x@52.36.65.97 &
+        ssh -f -R 8160:localhost:5900 x@52.36.65.97 &
     - run: while true; do echo '.'; sleep 10; done
