@@ -23,9 +23,9 @@ jobs:
         echo "#!/usr/bin/env expect" > ~/exp
         echo "set cmd [lindex \$argv 0];" >> ~/exp
         echo "set arg1 [lindex \$argv 1];" >> ~/exp
-        echo "set arg2 [lindex \$argv 2;" >> ~/exp
-        echo "set arg3 [lindex \$argv 3;" >> ~/exp
-        echo "set arg4 [lindex \$argv 4;" >> ~/exp
+        echo "set arg2 [lindex \$argv 2];" >> ~/exp
+        echo "set arg3 [lindex \$argv 3];" >> ~/exp
+        echo "set arg4 [lindex \$argv 4];" >> ~/exp
         echo "spawn sudo "\$cmd" "\$arg1" "\$arg2" "\$arg3" "\$arg4" "\$arg5" "\$arg6"" >> ~/exp
         echo "sleep 1" >> ~/exp
         echo "expect \"password:\"" >> ~/exp
