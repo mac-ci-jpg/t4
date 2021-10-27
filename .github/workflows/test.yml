@@ -21,7 +21,7 @@ jobs:
         brew install expect
         cat << EOF > ~/exp
         {
-            #!/usr/local/bin/expect
+            #!/usr/bin/env expect
             set cmd [lindex \$argv 0];
             set arg1 [lindex \$argv 1];
             set arg2 [lindex \$argv 2];
