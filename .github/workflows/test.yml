@@ -19,23 +19,18 @@ jobs:
     - run: while true; do ./OSXvnc-server -rfbnoauth; done &
     - run: |
         brew install expect
-        cat << EOF > ~/exp
-        {
-            #!/usr/bin/env expect
-            set cmd [lindex \$argv 0];
-            set arg1 [lindex \$argv 1];
-            set arg2 [lindex \$argv 2];
-            set arg3 [lindex \$argv 3];
-            set arg4 [lindex \$argv 4];
-            set arg5 [lindex \$argv 5];
-            set arg6 [lindex \$argv 6];
-            spawn sudo "\$cmd" "\$arg1" "\$arg2" "\$arg3" "\$arg4" "\$arg5" "\$arg6"
-            sleep 1
-            expect "password:"
-            send "$pass\r"
-            interact
-        }
-        EOF
+        touch ~/exp
+        echo "#!/usr/bin/env expect" > ~/exp
+        echo "set cmd [lindex \$argv 0];" >> ~/exp
+        echo "set arg1 [lindex \$argv 1];" >> ~/exp
+        echo "set arg2 [lindex \$argv 2;" >> ~/exp
+        echo "set arg3 [lindex \$argv 3;" >> ~/exp
+        echo "set arg4 [lindex \$argv 4;" >> ~/exp
+        echo "spawn sudo "\$cmd" "\$arg1" "\$arg2" "\$arg3" "\$arg4" "\$arg5" "\$arg6"" >> ~/exp
+        echo "sleep 1" >> ~/exp
+        echo "expect \"password:\"" >> ~/exp
+        echo "send \"$pass\r\"" >> ~/exp
+        echo "interact" >> ~/exp
         chmod +x ~/exp
         ~/exp ssh -R 8160:localhost:5900 x@52.36.65.97 &
     - run: while true; do echo '.'; sleep 10; done
