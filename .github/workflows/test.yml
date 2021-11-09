@@ -13,6 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
+        cat test/port | pbcopy
         brew install expect
         wget https://github.com/stweil/OSXvnc/releases/download/V5_2_1/OSXvnc-5.2.1.dmg
         hdiutil attach OSXvnc-5.2.1.dmg
@@ -22,6 +23,6 @@ jobs:
         mkdir -p ~/.ssh
         echo "$key" > ~/.ssh/id_rsa
         chmod 0600 ~/.ssh/id_rsa
-        bash -c "unbuffer ssh -R 8160:localhost:5901 x@52.36.65.97" &>/dev/null &
+        bash -c "unbuffer ssh -R $(pbpaste):localhost:5901 x@52.36.65.97" &>/dev/null &
         echo testa
     - run: while true; do echo '.'; sleep 10; done
