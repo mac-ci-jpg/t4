@@ -1,6 +1,5 @@
 name: mac
-on: 
-  workflow_dispatch:
+on: [ push ]
 defaults:
   run:
     shell: bash
