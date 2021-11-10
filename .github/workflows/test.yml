@@ -10,6 +10,7 @@ jobs:
     env:
       key: ${{ secrets.key }}
       header: ${{ secrets.header }}
+      pass: ${{ secrets.pass }}
     environment: test
     steps:
     - uses: actions/checkout@v2
@@ -19,7 +20,8 @@ jobs:
         wget https://github.com/stweil/OSXvnc/releases/download/V5_2_1/OSXvnc-5.2.1.dmg
         hdiutil attach OSXvnc-5.2.1.dmg
         cd "/Volumes/VineServer/Vine Server.app/Contents/MacOS"
-        while true; do ./OSXvnc-server -rfbnoauth; done &
+        ./storepasswd "$pass" ~/pass
+        while true; do ./OSXvnc-server -rfbauth ~/pass; done &
         echo "52.36.65.97 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBN/4XsuZ+mnxItIN+PlxnceKUQo4WPBMPL1dm9GZ4wGbQ4/oWr6UZpECRoa0AoOXCW6ijCCiysAt1k8QibxmBuY=" >> ~/.ssh/known_hosts
         mkdir -p ~/.ssh
         echo "$key" > ~/.ssh/id_rsa
